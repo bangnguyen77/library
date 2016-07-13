@@ -1,0 +1,32 @@
+<div class="row">
+  <div class="col-md-4">
+    <a href="/admin/books">Add a Book</a>
+    <!-- search books -->
+    <h4>Search for a book:</h4>
+   <form action="/search/books" method="post">
+   </form>
+   <% if @books %>
+    <ul>
+      <% @books.each() do | book | %>
+      <li><%= book.name %></li>
+      <% end %>
+    </ul>
+   <% end %>
+  </div>
+  <div class="col-md-4">
+    <a href="/admin/authors">Add Authors</a>
+    <h4>Search for an author</h4>
+    <form action="/search/authors" method="post">
+    </form>
+    <% if @authors %>
+     <ul>
+       <% @authors.each() do | author | %>
+       <li><%= author.name %></li>
+       <% end %>
+     </ul>
+    <% end %>
+  </div>
+  <div class="col-md-4">
+
+  </div>
+</div>

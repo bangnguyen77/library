@@ -1,1 +1,20 @@
-<h1>hello world!</h1>
+<div class="row">
+  <h1>Welcome to the library</h1>
+  <h3>New users can sign up <a href="/signup">here</a></h3>
+  <h4>Existing users: select your name below and click 'Submit'<h4>
+</div>
+<div class="row">
+  <div class="col-md-3">
+    <% if @users.any? %>
+    <form class="form-horizontal" action="/patrons" method="post">
+      <select name="patron" class="form-control">
+        <option value="0">Select your name</option>
+        <% @users.each() do | user | %>
+        <option value="<%= user.id %>"><%= user.name %></optional>
+        <% end %>
+      </select>
+      <button type="submit" class="btn btn-success">Submit</button>
+    </form>
+    <% end %>
+  </div>
+</div>
