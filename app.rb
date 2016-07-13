@@ -2,6 +2,7 @@ require('sinatra')
 require('sinatra/reloader')
 require('pg')
 require('./lib/author')
+require('./lib/patron')
 
 also_reload('lib/**/*.rb')
 

@@ -22,13 +22,13 @@
               </div>
               <form action="/admin/authors/<%= author.id %>/edit">
                 <div class="col-md-1">
-                  <button type="submit" class="btn btn-sm btn-primary">Edit</button>
+                  <button type="submit" id="edit-btn" class="btn btn-sm btn-primary">Edit</button>
                 </div>
               </form>
               <form action="/admin/authors/<%= author.id %>/delete" method="post">
                 <div class="col-md-1">
                   <input name="_method" type="hidden" value="delete">
-                  <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                  <button type="submit" id="del-btn" class="btn btn-sm btn-danger">Delete</button>
                 </div>
               </form>
             </div>
