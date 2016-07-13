@@ -1,3 +1,8 @@
 .content {
     margin-top: 75px;
 }
+
+li {
+  list-style: none;
+  border-bottom: 1px dotted;
+}

@@ -1,0 +1,13 @@
+<div class="row">
+<h2>Edit <%= @author.name %></h2>
+<form action="/admin/authors/<%= @author.id %>/edit" method="post">
+  <div class="col-md-12">
+    <div class="form-group">
+      <label for="name">New name:</label>
+      <input name="_method" type="hidden" value="patch">
+      <input id="name" name="name" class="form-control" type="text" value="<%= @author.name %>">
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+  </div>
+</form>
+</div>
