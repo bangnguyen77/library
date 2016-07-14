@@ -41,7 +41,7 @@ class Book
     end
     book_authors
   end
-  
+
   # class methods
   define_singleton_method(:all) do
     returned_books = DB.exec('SELECT * FROM books order by name asc;')
@@ -59,5 +59,26 @@ class Book
       found_book = Book.new({:id => book.fetch('id').to_i, :name => book.fetch('name')})
     end
     found_book
+  end
+
+  define_singleton_method(:overdue) do
+    result = []
+    overdue_books = DB.exec("select * from checkout where
+                             due <= cast('#{DateTime.now}' as date)
+                             and
+                             returned is not null")
+    overdue_books.each do | overdue_book |
+      result.push(overdue_book.first().fetch('id').to_i)
+    end
+    result
+  end
+
+  define_singleton_method(:search) do | query |
+    returned_books = DB.exec("SELECT * FROM books WHERE name ILIKE '%#{query}%';")
+    result = []
+    returned_books.each() do | book |
+      result.push(Book.new({:id => book.fetch('id').to_i, :name => book.fetch('name')}))
+    end
+    result
   end
 end

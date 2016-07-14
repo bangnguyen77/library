@@ -1,0 +1,11 @@
+<h1>Search results:</h1>
+<% if @search %>
+<ul>
+  <%  @search.each() do |item| %>
+  <li><a href="books/view/<%= item.id() %>"><%= item.name %></a></li>
+  <% end %>
+</ul>
+
+<% else %>
+  <h3>no results are founnd.</h3>
+<% end %>

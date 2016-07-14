@@ -91,4 +91,29 @@ describe(Book) do
     end
   end
 
+  describe(".search") do
+    it("will return book's matching a search query") do
+      new_book1 = Book.new({:name => "Learn Ruby"})
+      new_book1.save()
+      new_book2 = Book.new({:name => "Learn Ruby 2"})
+      new_book2.save()
+      new_book3 = Book.new({:name => "learn rubY 3"})
+      new_book3.save()
+      expect(Book.search("Ruby")).to(eq([new_book1, new_book2, new_book3]))
+    end
+  end
+
+  # describe('.overdue') do
+  #   it('will return a list of overdue books') do
+  #     new_book1 = Book.new({:name => "Learn Ruby"})
+  #     new_book1.save()
+  #     author1 = Author.new({:name => "Matz"})
+  #     author1.save()
+  #     new_book1.update({:author_ids => [author1.id]})
+  #     new_patron = Patron.new({:name => "Patrick Pat"})
+  #     new_patron.save()
+  #     result = new_patron.checkout({:book_id => new_book1.id})
+  #     expect(Book.overdue).to(eq([result]))
+  #   end
+  # end
 end

@@ -1,13 +1,42 @@
 <div class="row">
-<h2>Edit <%= @book.name %></h2>
-<form action="/admin/books/<%= @book.id %>/edit" method="post">
-  <div class="col-md-12">
-    <div class="form-group">
-      <label for="name">New name:</label>
-      <input name="_method" type="hidden" value="patch">
-      <input id="name" name="name" class="form-control" type="text" value="<%= @book.name %>">
-      <button type="submit" class="btn btn-primary">Submit</button>
+  <h2>Edit <%= @book.name %></h2>
+  <form action="/admin/books/<%= @book.id %>/edit" method="post">
+    <div class="col-md-12">
+      <div class="form-group">
+        <label for="name">New name:</label>
+        <input name="_method" type="hidden" value="patch">
+        <input id="name" name="name" class="form-control" type="text" value="<%= @book.name %>">
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </div>
     </div>
+  </form>
+</div>
+
+<div class="row">
+  <div class="col-md-6">
+    <h3>Add an author</h3>
+    <% if @authors.any? %>
+    <form class="form-horizontal" action="/admin/authors/books/add/<%= @book.id %>" method="post">
+      <input name="_method" type="hidden" value="patch">
+      <select name="author" class="form-control">
+        <option value="0">Select a author</option>
+        <% @authors.each() do | author | %>
+        <option value="<%= author.id %>"><%= author.name %></optional>
+        <% end %>
+      </select>
+      <button type="submit" class="btn btn-success">Submit</button>
+    </form>
+    <% end %>
   </div>
-</form>
+</div>
+<div class="row">
+  <div class="col-md-6">
+  <% if @book.authors.any? %>
+    <ul>
+      <% @book.authors.each do | book_author | %>
+      <li><%= book_author.name %></li>
+      <% end %>
+    </ul>
+  <% end %>
+  </div>
 </div>

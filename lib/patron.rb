@@ -30,13 +30,26 @@ class Patron
     book_id = attributes.fetch(:book_id, nil)
     ck_time = DateTime.now
     due_time = DateTime.now + 14
-    DB.exec("insert into checkout (book_id, patron_id, date, due)
-             values (#{book_id.to_i}, #{self.id}, '#{ck_time}', '#{due_time}');")
+    new_checkout = DB.exec("insert into checkout (book_id, patron_id, date, due)
+             values (#{book_id.to_i}, #{self.id}, '#{ck_time}', '#{due_time}') returning id;")
+    return new_checkout.first().fetch('id').to_i
   end
 
   define_method(:checkin) do | attributes |
     book_id = attributes.fetch(:book_id, nil)
     DB.exec("update checkout set returned = '#{DateTime.now}' where book_id = #{book_id} and patron_id = #{self.id}")
+  end
+
+  define_method(:checkedin) do
+    patron_books = []
+    results = DB.exec("select book_id from checkout where patron_id = #{self.id} and returned is not null")
+    results.each do | result |
+      book_id = result.fetch('book_id').to_i
+      book = DB.exec("select * from books where id = #{book_id}")
+      name = book.first().fetch('name')
+      patron_books.push(Book.new({:name => name, :id => book_id}))
+    end
+    patron_books
   end
 
   define_method(:books) do

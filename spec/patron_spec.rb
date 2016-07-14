@@ -86,8 +86,19 @@ describe(Patron) do
       new_book.save()
       new_patron.checkout({:book_id => new_book.id})
       new_patron.checkin({:book_id => new_book.id})
-      expect(new_patron.books).to(eq([new_book]))
+      expect(new_patron.checkedin).to(eq([new_book]))
+    end
+  end
 
+  describe('#checkedin') do
+    it('will return a list of books checked in') do
+      new_patron = Patron.new({:name => "Patrick Pat"})
+      new_patron.save()
+      new_book = Book.new({:name => "More Ruby"})
+      new_book.save()
+      new_patron.checkout({:book_id => new_book.id})
+      new_patron.checkin({:book_id => new_book.id})
+      expect(new_patron.checkedin).to(eq([new_book]))
     end
   end
 

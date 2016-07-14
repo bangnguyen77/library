@@ -1,1 +1,12 @@
 <h2>Hello <%= @patron.name %></h2>
+
+<form action="/search" method="post">
+  <div class="col-md-12">
+    <div class="form-group">
+      <label for="search_query">Search:</label>
+      <input id="search_query" name="search_query" class="form-control" type="text">
+      <input name="_method" value="get" type="hidden">
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+  </div>
+</form>

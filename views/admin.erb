@@ -1,10 +1,19 @@
 <div class="row">
   <div class="col-md-4">
-    <a href="/admin/books">Add a Book</a>
+    <a href="/admin/books">Manage Books</a>
     <!-- search books -->
     <h4>Search for a book:</h4>
-   <form action="/search/books" method="post">
-   </form>
+    <form action="/search" method="post">
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="search_query">Search:</label>
+          <input id="search_query" name="search_query" class="form-control" type="text">
+          <input name="_method" value="get" type="hidden">
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+      </div>
+    </form>
+
    <% if @books %>
     <ul>
       <% @books.each() do | book | %>
@@ -14,7 +23,7 @@
    <% end %>
   </div>
   <div class="col-md-4">
-    <a href="/admin/authors">Add Authors</a>
+    <a href="/admin/authors">Manage Authors</a>
     <h4>Search for an author</h4>
     <form action="/search/authors" method="post">
     </form>

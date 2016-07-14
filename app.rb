@@ -20,6 +20,12 @@ get('/signup') do
   erb(:signup)
 end
 
+get('/search') do
+  @page_title = "search"
+  @search = Book.search(params.fetch("search_query"))
+  erb(:search)
+end
+
 post('/patrons/add') do
   @page_title = "patron"
   patron = Patron.new({:name => params.fetch('name')})
@@ -65,7 +71,24 @@ end
 get('/admin/authors/:id/edit') do
   @page_title = "admin"
   @author = Author.find(params.fetch('id').to_i)
+  @books = Book.all()
   erb(:authors_edit)
+end
+
+patch('/admin/books/authors/add/:id') do
+  author_id = params.fetch('id').to_i
+  book_id = params.fetch("book")
+  book = Book.find(book_id)
+  book.update(:author_ids => [author_id])
+  redirect to("/admin/authors/#{author_id}/edit")
+end
+
+patch('/admin/authors/books/add/:id') do
+  book_id = params.fetch('id').to_i
+  author_id = params.fetch("author")
+  author = Author.find(author_id)
+  author.update({:book_ids => [book_id]})
+  redirect to("/admin/books/#{book_id}/edit")
 end
 
 patch('/admin/authors/:id/edit') do
@@ -101,6 +124,7 @@ end
 get('/admin/books/:id/edit') do
   @page_title = "admin"
   @book = Book.find(params.fetch('id').to_i)
+  @authors = Author.all
   erb(:books_edit)
 end
 
@@ -119,5 +143,9 @@ delete('/admin/books/:id/delete') do
   book = Book.find(id)
   book.delete()
   redirect to('/admin/books')
+end
 
+get('/books/view/:id') do
+  @book = Book.find(params.fetch('id').to_i)
+  erb(:book_view)
 end

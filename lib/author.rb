@@ -20,7 +20,9 @@ class Author
     DB.exec("update authors set name ='#{@name}' where id = #{self.id};")
 
     attributes.fetch(:book_ids, []).each do | book_id |
-      DB.exec("insert into books_authors (author_id, book_id) values (#{self.id}, #{book_id});")
+      check = DB.exec("select * from books_authors where author_id = #{self.id} and book_id = #{book_id}")
+      DB.exec("insert into books_authors (author_id, book_id)
+               values (#{self.id}, #{book_id});") if check.num_tuples.zero?
     end
   end
 

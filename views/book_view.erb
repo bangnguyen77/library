@@ -1,0 +1,9 @@
+<h1><%= @book.name %></h1>
+<p>by<p>
+<% if @book.authors.any? %>
+  <ul>
+  <% @book.authors.each() do | author | %>
+    <li><%= author.name %></li>
+  <% end %>
+  </ul>
+<% end %>
