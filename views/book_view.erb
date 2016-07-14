@@ -7,3 +7,19 @@
   <% end %>
   </ul>
 <% end %>
+
+<div class="row">
+  <div class="col-md-3">
+    <% if @users.any? %>
+    <form class="form-horizontal" action="/admin/books/checkout/<%= @book.id %>" method="post">
+      <select name="patron" class="form-control">
+        <option value="0">Checkout to user?</option>
+        <% @users.each() do | user | %>
+        <option value="<%= user.id %>"><%= user.name %></optional>
+        <% end %>
+      </select>
+      <button type="submit" class="btn btn-success">Submit</button>
+    </form>
+    <% end %>
+  </div>
+</div>

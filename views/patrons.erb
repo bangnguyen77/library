@@ -10,3 +10,15 @@
     </div>
   </div>
 </form>
+
+<% if @patron.history.any? %>
+
+  <% @patron.history.each() do |item| %>
+    <p><%= item[0].name %></p>
+    <p>Checked Out: <%= item[1] %></p>
+    <p>Due Date: <%= item[2] %></p>
+    <p>Returned Date: <%= item[3] %></p>
+
+  <% end %>
+
+<% end %>

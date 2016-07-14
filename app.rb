@@ -145,7 +145,16 @@ delete('/admin/books/:id/delete') do
   redirect to('/admin/books')
 end
 
+post('/admin/books/checkout/:id') do
+  book_id = params.fetch('id').to_i
+  patron_id = params.fetch('patron').to_i
+  patron = Patron.find(patron_id)
+  patron.checkout({:book_id => book_id})
+
+end
+
 get('/books/view/:id') do
   @book = Book.find(params.fetch('id').to_i)
+  @users = Patron.all
   erb(:book_view)
 end

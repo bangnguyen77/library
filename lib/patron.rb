@@ -40,6 +40,20 @@ class Patron
     DB.exec("update checkout set returned = '#{DateTime.now}' where book_id = #{book_id} and patron_id = #{self.id}")
   end
 
+  define_method(:history) do
+    book_history = DB.exec("select * from checkout where patron_id = '#{self.id}'")
+    result = []
+    book_history.each do | history_item |
+      book = Book.find(history_item.fetch('book_id').to_i)
+      checked_out = DateTime.parse(history_item.fetch('date'))
+      due_date = DateTime.parse(history_item.fetch('due'))
+      return_date = history_item.fetch('returned')
+      return_date ? return_date = DateTime.parse(history_item.fetch('returned')) : return_date = ""
+      result.push([book, checked_out, due_date, return_date])
+    end
+    result
+  end
+
   define_method(:checkedin) do
     patron_books = []
     results = DB.exec("select book_id from checkout where patron_id = #{self.id} and returned is not null")
