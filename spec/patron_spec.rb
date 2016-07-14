@@ -67,4 +67,39 @@ describe(Patron) do
     end
   end
 
+  describe('#checkout') do
+    it('will check out a book to a patron') do
+      new_patron = Patron.new({:name => "Patrick Pat"})
+      new_patron.save()
+      new_book = Book.new({:name => "More Ruby"})
+      new_book.save()
+      new_patron.checkout({:book_id => new_book.id})
+      expect(new_patron.books).to(eq([new_book]))
+    end
+  end
+
+  describe('#checkin') do
+    it('will check in a book from a patron') do
+      new_patron = Patron.new({:name => "Patrick Pat"})
+      new_patron.save()
+      new_book = Book.new({:name => "More Ruby"})
+      new_book.save()
+      new_patron.checkout({:book_id => new_book.id})
+      new_patron.checkin({:book_id => new_book.id})
+      expect(new_patron.books).to(eq([new_book]))
+
+    end
+  end
+
+  describe('#books') do
+    it('will returned all books') do
+      new_patron = Patron.new({:name => "Patrick Pat"})
+      new_patron.save()
+      new_book = Book.new({:name => "More Ruby"})
+      new_book.save()
+      new_patron.checkout({:book_id => new_book.id})
+      new_patron.checkin({:book_id => new_book.id})
+      expect(new_patron.books).to(eq([new_book]))
+    end
+  end
 end

@@ -66,5 +66,29 @@ describe(Author) do
       new_author1.update({:name => 'Other Test'})
       expect(new_author1.name()).to(eq("Other Test"))
     end
+
+    it('returns all of the authors of a book') do
+      new_book1 = Book.new({:name => "Learn Ruby"})
+      new_book1.save()
+      new_book2 = Book.new({:name => "More Ruby"})
+      new_book2.save()
+      author1 = Author.new({:name => "Matz"})
+      author1.save()
+      author1.update({:book_ids => [new_book1.id, new_book2.id]})
+      expect(author1.books).to(eq([new_book1, new_book2]))
+    end
+  end
+
+  describe('#books') do
+    it('returns all of the authors of a book') do
+      new_book1 = Book.new({:name => "Learn Ruby"})
+      new_book1.save()
+      new_book2 = Book.new({:name => "More Ruby"})
+      new_book2.save()
+      author1 = Author.new({:name => "Matz"})
+      author1.save()
+      author1.update({:book_ids => [new_book1.id, new_book2.id]})
+      expect(author1.books).to(eq([new_book1, new_book2]))
+    end
   end
 end

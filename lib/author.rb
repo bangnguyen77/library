@@ -16,12 +16,30 @@ class Author
   end
 
   define_method(:update) do | attributes |
-    @name = attributes[:name]
-    @id = self.id()
-    DB.exec("update authors set name ='#{@name}' where id = #{@id};")
+    @name = attributes.fetch(:name, @name)
+    DB.exec("update authors set name ='#{@name}' where id = #{self.id};")
+
+    attributes.fetch(:book_ids, []).each do | book_id |
+      DB.exec("insert into books_authors (author_id, book_id) values (#{self.id}, #{book_id});")
+    end
+  end
+
+  define_method(:books) do
+    author_book = []
+    results = DB.exec("select books.* from authors
+                       join books_authors on (authors.id = books_authors.author_id)
+                       join books on (books_authors.book_id = books.id)
+                       where authors.id = #{self.id}")
+    results.each() do | result |
+      book_id = result.fetch('id').to_i
+      name = result.fetch('name')
+      author_book.push(Book.new({:name => name, :id => book_id}))
+    end
+    author_book
   end
 
   define_method(:delete) do
+    DB.exec("delete from books_authors where author_id = #{self.id}")
     DB.exec("delete from authors where id = #{self.id()};")
   end
 

@@ -1,5 +1,6 @@
 require('rspec')
 require('pg')
+require('pry')
 require('author')
 require('patron')
 require('book')
@@ -12,5 +13,7 @@ RSpec.configure do | config |
     DB.exec("delete from authors *;")
     DB.exec("delete from patrons *;")
     DB.exec("delete from books *;")
+    DB.exec("delete from books_authors *;")
+    DB.exec("delete from checkout *;")
   end
 end
